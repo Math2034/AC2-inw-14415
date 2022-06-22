@@ -39,6 +39,6 @@ export default function Create() {
         <input type="tel" name="telefone" placeholder='Telefone' className='form-control' id="" required onChange={event=>setTelefone(event.target.value)} value={telefone} />
         <textarea name="mensagem" className='form-control' placeholder='Mensagem' id="" onChange={event=>setMensagem(event.target.value)} value={mensagem} ></textarea>
         <input type="submit" value="SALVAR" onClick={cadastrar} className='form-control btn btn-outline-dark' />
-        </>
+    </>
   )
 }
