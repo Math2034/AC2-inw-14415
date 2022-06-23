@@ -54,14 +54,33 @@ export default function Read() {
       setMensagem(contatoUnico.mensagem)
       setMostrar(true)
     }
-    if(mensagem!=""){
-      setMostrar(true)
-    }
+    if(mensagem!=""){setMostrar(true)}
   }
-  useEffect(()=>{
-    show()
-  },[ID])
+  useEffect(()=>{show()},[ID])
 
+  const bt_cancelar = ()=>{
+    setMostrar(false)
+    setNome("")
+    setEmail("")
+    setTelefone("")
+    setMensagem("")
+    setID(null)
+  }
+
+  const bt_alterar = (id)=>{
+    const contatoShow = doc(database,'contato',id)
+    updateDoc(contatoShow,{
+      nome:nome,email:email,telefone:telefone,mensagem:mensagem
+    }).then(()=>{
+      setNome("")
+      setEmail('')
+      setTelefone('')
+      setMensagem('')
+      setID(null)
+      read()
+      setMostrar(false)
+    })
+  }
   //rotina de update fim
 
   return (
@@ -73,7 +92,8 @@ export default function Read() {
         <input type="email" name="email" placeholder='Email' className='form-control' id="" required onChange={event=>setEmail(event.target.value)} value={email} />
         <input type="tel" name="telefone" placeholder='Telefone' className='form-control' id="" required onChange={event=>setTelefone(event.target.value)} value={telefone} />
         <textarea name="mensagem" className='form-control' placeholder='Mensagem' id="" onChange={event=>setMensagem(event.target.value)} value={mensagem} ></textarea>
-        <input type="submit" value="SALVAR" className='form-control btn btn-outline-dark' />
+        <input type="button" value="CANCELAR" className='form-control btn btn-outline-danger' onClick={bt_cancelar}/>
+        <input type="submit" value="SALVAR" className='form-control btn btn-outline-dark' onClick={()=>bt_alterar(contatoUnico.id)}/>
        </div>
     ):(
       <></>
